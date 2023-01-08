@@ -73,7 +73,7 @@ public class InstructorController {
 	@Autowired
 	private EnrollDetailsRepository enrollDetailsRepository;
 	
-	@Value("${project.image}")
+	@Value("${project.image}")      
 	private String path; // getting file path from properties where image will store
 
 
@@ -112,7 +112,7 @@ public class InstructorController {
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			return new ResponseEntity<>(new FileResponce(null, "Video is could not upload"),
+			return new ResponseEntity<>(new FileResponce(null, "Video could not upload"),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
@@ -120,6 +120,7 @@ public class InstructorController {
 	}
 
 	// download image
+	/*
 	@GetMapping(value = "/download/{imageName}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public void downloadImage(@PathVariable("imageName") String imageName, HttpServletResponse response)
 			throws IOException {
@@ -128,7 +129,7 @@ public class InstructorController {
 		response.setContentType(MediaType.MULTIPART_FORM_DATA_VALUE);
 
 		StreamUtils.copy(resource, response.getOutputStream());
-	}
+	}*/
 
 	// ======================== GET LISTS========================================
 
@@ -161,8 +162,8 @@ public class InstructorController {
 			// split
 			String[] arrOfStr = sbt.split(",");
 
-			String id = arrOfStr[0];
-			String tit = arrOfStr[1];
+			String id = arrOfStr[0];       // sub-topic Id 
+			String tit = arrOfStr[1];      // sub-topic title 
 			// String indno = arrOfStr[2];
 
 			stdata.setSubtId(Long.parseLong(id));

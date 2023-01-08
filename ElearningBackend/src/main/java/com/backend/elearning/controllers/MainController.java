@@ -2,6 +2,7 @@ package com.backend.elearning.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -87,7 +88,7 @@ public class MainController {
 
 	
 
-	
+	// once the user register the itself request send come from frontend 
 
 	@PostMapping("/register")
 	public String userRegistration(@RequestBody User userToRegister) {
@@ -98,44 +99,54 @@ public class MainController {
 	@PostMapping("/login")
 	public String userLogin(@RequestBody User obj) {
 		System.out.println("inside login");
-		String username = obj.getUserName();
-		String uname = registerService.getUserName(username);
+		String username = obj.getUserName();   // username from input form 
+		String uname = registerService.getUserName(username);  // username from database 
 		System.out.println(username + " " + uname);
 
 //		LoginInfo loginInfo = new LoginInfo();
 
 		// password
-		if (uname == null) {
+		if (uname == null)
+		{   // if username not present in database return 
 
 //			loginInfo.setMessage("Username not found, Please Register First!");
 			return "";
-		} else {
+		} 
+		else
+		{
 
-			if (uname.equals(username)) {
-				String pass = obj.getPass();
-				String pwd = registerService.getPassword(uname);
+			if (uname.equals(username))   // if username already present in database  then check for password also 
+			{
+				String pass = obj.getPass();    // password fron input form 
+				String pwd = registerService.getPassword(uname);    // password from database
 
-				if (pwd == null) {
-//					loginInfo.setMessage("Incorrect Password");
+				if (pwd == null)   
+				{
+					//	loginInfo.setMessage("Incorrect Password");
 					return "";
 				}
 
-				if (pwd.equals(pass)) {
+				if (pwd.equals(pass))  // if password from database and password from input form are equal then user already logged in 
+				{
 					// get role id
 					Integer roleid = registerService.getUserRoleId(uname);
 
-//					loginInfo.setRoleId(roleid);
-//					loginInfo.setUserName(uname);
-//					loginInfo.setMessage("Login Sucessfull");
+				// loginInfo.setRoleId(roleid);
+				//	loginInfo.setUserName(uname);
+  				//	loginInfo.setMessage("Login Sucessfull");
 
 					return uname;
-				} else {
+				} 
+				else 
+				{
 
-//					loginInfo.setMessage("Incorrect Password");
+//				//	loginInfo.setMessage("Incorrect Password");
 					return "";
 				}
 
-			} else {
+			} 
+			else 
+			{
 //				loginInfo.setMessage("Incorrect Password");
 				return "";
 			}
@@ -143,10 +154,13 @@ public class MainController {
 	}
 
 	// get rolename by username
-	@PostMapping("/rolename")
+	@PostMapping("/rolename")           // checking the user role it is Student or Instructor or Admin 
 	public String getUserRoleName(@RequestBody User user) {
 		System.out.println("rolename=" + user.getUserName());
 		return registerService.getUserRoleName(user.getUserName());
+		
+		//	select name from elearningdb.category where id = (select category_id from elearningdb.users where username = ?1);
+
 	}
 
 	@PostMapping("/user/getuid/{userInfo}")
@@ -176,14 +190,19 @@ public class MainController {
 	@GetMapping("/admin/users")
 	public List<UserData> getAllUsers() {
 
+		
 		List<UserData> userList = new ArrayList<UserData>();
 
-		List<User> uList = registerService.getAllUsersList();
+		// we are fetching all user list  
+		List<User> uList = registerService.getAllUsersList();    // using findAll() 
+		
+		// we are storing all information of user in object  and that object adding in the userList  
 
 		for (User us : uList) {
 
 			UserData u = new UserData();
 
+			// setting information in the object 
 			u.setUserId(us.getUserId());
 			u.setUserName(us.getUserName());
 			u.setFirstName(us.getFirstName());
@@ -191,7 +210,7 @@ public class MainController {
 			u.setPhoneNo(us.getPhoneNo());
 			u.setEmail(us.getEmail());
 
-			userList.add(u);
+			userList.add(u);    // adding that object into the userList  
 		}
 
 		return userList;
@@ -203,6 +222,7 @@ public class MainController {
 		registerService.deleteUserByID(id);
 
 		return "User with id " + id + " has been deleted successfully.";
+		// we are returning string from here in frontend it will be display as alert msg
 	}
 
 	@GetMapping("/admin/inctruct/count")
@@ -227,11 +247,16 @@ public class MainController {
 
 	@GetMapping("/admin/courses")
 	public List<CourseData> getPlantsList() {
-
+		
+		//	create List of CourseData 
 		List<CourseData> cList = new ArrayList<CourseData>();
 
+		// fetching all courses 
 		List<Course> cl = courseRepository.findAll();
-
+		
+		
+		// fetch one object of courseData from database and create CourseDara object and  set the value with the help of setter method 
+		// in that object 
 		for (Course course : cl) {
 
 			CourseData cd = new CourseData();
@@ -244,7 +269,7 @@ public class MainController {
 			cd.setCourseCategory(course.getCourseCategory().getCourseCatId());
 			cd.setUser(course.getUser().getUserId());
 
-			cList.add(cd);
+			cList.add(cd);  // adding into the list
 
 		}
 
@@ -262,7 +287,7 @@ public class MainController {
 	public String setApproveRequest(@RequestBody Aproove approve) {
 
 		aprooveRepository.save(approve);
-		return "User approved sucessfully.";
+		return "User approved sucessfully.";  
 	}
 
 	@GetMapping("/admin/aprovestatus/{uid}")

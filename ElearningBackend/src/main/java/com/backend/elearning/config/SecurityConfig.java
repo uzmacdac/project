@@ -29,6 +29,62 @@ public class SecurityConfig {
         };
     }
 	
+}    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 	
 //	@Bean
 //	public FilterRegistrationBean<CorsFilter> corsFilter() {
@@ -57,4 +113,4 @@ public class SecurityConfig {
 //	}
 	
 	
-}
+

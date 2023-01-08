@@ -16,9 +16,12 @@ public class CourseCategory {
 
 	  @Id
 	    @GeneratedValue(strategy = GenerationType.AUTO)
-	    private Integer courseCatId;
+	    private Integer courseCatId;   // 1 , 2 , 3 , 4  
 
-	    private String courseCatName;
+	    private String courseCatName;  //Technology , Business , Health  , Languages
+	    
+	    
+	    // join with course table because one course_category have many courses so there is one to many relation 
 
 	    @OneToMany(mappedBy = "courseCategory")
 		private List<Course> cources;

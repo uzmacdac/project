@@ -25,8 +25,8 @@ public class FileServiceImpl implements FileService {
 	public String uploadImage(String path, MultipartFile file, Course courseId, User userId, Topic chapterId ,SubTopic subtId) throws IOException {
 
 		// renaming
-		String extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
-		String cid = courseId.getCourseId().toString();
+		String extension = StringUtils.getFilenameExtension(file.getOriginalFilename());   // getting extension 
+		String cid = courseId.getCourseId().toString();          // getting courseId and converting into string 
 		String uid = userId.getUserId().toString();
 		String tid = chapterId.getChapterId().toString();
 		String sid = subtId.getSubtId().toString();
@@ -44,7 +44,7 @@ public class FileServiceImpl implements FileService {
 		String name = "vid" + "_" + cid + "-" + tid+"-"+sid+""+"." + extension;
 
 		// fullpath
-		String filePath = path + File.separator + name;
+		String filePath = path + File.separator + name;    
 
 		System.out.println("sep" + File.separator + name + extension);
 
@@ -64,6 +64,7 @@ public class FileServiceImpl implements FileService {
 	@Override
 	public String videoUplod(MultipartFile file) throws IllegalStateException, IOException {
 
+		// copy or transfer file to 
 		file.transferTo(new File("/ElearningBackend/images" + file.getOriginalFilename()));
 		return "video uploaded sucessfully";
 	}

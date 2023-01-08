@@ -33,7 +33,7 @@ public class Course {
 	@Column(name = "course_desc")
 	private String courseDesc;
 	
-	@Column(name = "course_type")
+	@Column(name = "course_type")    // paid or free
 	private String courseType;
 	
 	@Column(name = "course_price")

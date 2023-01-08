@@ -198,7 +198,7 @@ public class StudentController {
 				}
 
 				// send email functionality
-
+				
 				String toEmail = registerService.getUserEmail(userName);
 				String fName = registerService.getUserFirstName(userName);
 				String lName = registerService.getUserLastName(userName);
